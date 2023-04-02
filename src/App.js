@@ -3,8 +3,6 @@ import {supabase} from './supabaseClient';
 import './App.css';
 
 
-
-
 // A React component that queries and displays data from Supabase
 function Library() {
   // The useState hook lets us store data in a component across renders
