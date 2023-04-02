@@ -1,20 +1,53 @@
-import plants from './plants.jpg';
+import {useState} from 'react';
+import {supabase} from './supabaseClient';
 import './App.css';
 
-function PlantPic() {
-  return <img style={{width: 800, height: 400}}src={plants} alt="houseplants" />;
+
+
+
+// A React component that queries and displays data from Supabase
+function Library() {
+  // The useState hook lets us store data in a component across renders
+  // setMyBooks is a setter function that updates the state of myBooks
+  const [myBooks, setMyBooks] = useState([]);
+  // This should look familar from Codepen
+  async function getBooks() {
+    let { data: Books, error } = await supabase
+      .from('Books')
+      .select('*')
+    // Update the state
+    setMyBooks(Books);
+  }
+  // Execute the function
+  getBooks();
+  // Below is what displays when you use <Library />
+  return (
+    <table className="bookTable">
+    {
+      myBooks.map(b => (
+        <tr>
+          <td>{b.title}</td>
+          <td>{b.author}</td>
+          <td>{b.description}</td>
+          <td>{b.ISBN}</td>
+        </tr>
+      ))
+    }
+    </table>
+  )
 }
 
-function Heading() {
-  return <h1>Houseplants</h1>
-}
 
 function PlantQuestion() {
+  const [count, setCount] = useState(0);
+  function Submit() {
+    setCount(count + 1);
+  }
   return(
     <div>
       <p>What is your favorite houseplant?</p>
       <textarea></textarea>
-      <button>Submit</button>
+      <button onClick={Submit}>Submit {count}</button>
     </div>
   );
 }
@@ -48,19 +81,13 @@ function PlantsList() {
 }
 
 
-
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-
-        <div className="Heading">
-          <Heading />
-        </div>
-
-        <PlantPic />
         <PlantQuestion />
         <PlantsList />
+        <Library />
       </header>
 
     </div>

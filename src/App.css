@@ -37,7 +37,12 @@
   }
 }
 
-.Heading {
-  font-family:fantasy;
+.bookTable {
+  border-collapse:collapse;
+}
+
+.bookTable, th, td {
+  border:1px solid;
+  padding: 10px;
 }
 
